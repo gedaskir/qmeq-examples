@@ -1,0 +1,15 @@
+### Files
+
+# Python byte files *.pyc
+*.pyc
+
+# Specific files
+examples/example_anderson.ipynb
+examples/example_anderson.py
+
+### Directories
+appendix/.ipynb_checkpoints
+examples/.ipynb_checkpoints
+tutorial/.ipynb_checkpoints
+papers/
+
