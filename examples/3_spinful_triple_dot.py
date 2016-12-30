@@ -3,7 +3,6 @@ from __future__ import division, print_function
 import matplotlib.pyplot as plt
 import numpy as np
 import qmeq
-import itertools
 
 #---------------------------------------------------
 
@@ -23,7 +22,6 @@ tlst  = {0: temp,  1: temp,  2: temp,  3: temp}
 
 # Quantum dot single-particle Hamiltonian
 nsingle = 10
-norb = nsingle//2
 e0, e1, e2, e3, e4 = 60, 40, 38, 20, 20
 o02, o03, o12, o13, o24, o34 = 0.2, 0.1, 0.1, -0.05, 0.2, 0.1
 
@@ -38,20 +36,12 @@ hsingle = np.kron(np.eye(2), hsingle0)
 
 #---------------------------------------------------
 
-# Coulom matrix elements
-usc = -0.1
-dotindex = [0, 0, 1, 1, 2, 0, 0, 1, 1, 2]
-coulomb = {}
-for m, n, k, l in itertools.product(range(nsingle), repeat=4):
-    if m!=n and k!=l and m//norb==l//norb and n//norb==k//norb:
-        # Interdot iteraction
-        # Note that the pairs (n,k) and (m,l) are at different dots
-        if (dotindex[m] == dotindex[l] and
-            dotindex[n] == dotindex[k] and
-            abs(dotindex[m]-dotindex[n]) == 1):
-            if n != k and m != l:
-                # Charge-quadrupole
-                coulomb.update({(m,n,k,l): usc})
+# Coulomb matrix elements
+usc = -0.2
+coulomb = {(0,2,3,1):usc, (0,3,2,1):usc, (0,7,8,1):usc, (0,8,7,1):usc,
+           (1,2,3,0):usc, (1,3,2,0):usc, (1,7,8,0):usc, (1,8,7,0):usc,
+           (2,5,6,3):usc, (2,6,5,3):usc, (3,5,6,2):usc, (3,6,5,2):usc,
+           (5,7,8,6):usc, (5,8,7,6):usc, (6,7,8,5):usc, (6,8,7,5):usc}
 
 #---------------------------------------------------
 
