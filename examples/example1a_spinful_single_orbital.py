@@ -99,32 +99,20 @@ def stab_calc(system, bfield, vlst, vglst, dV=0.0001):
     #
     return stab, stab_cond
 
-def stab_plot(stab, stab_cond, vlst, vglst, U, gam, fname='fig.pdf'):
+def stab_plot(stab_cond, vlst, vglst, U, gam, title, fname='fig.pdf'):
     (xmin, xmax, ymin, ymax) = np.array([vglst[0], vglst[-1],
                                          vlst[0], vlst[-1]])/U
-    fig = plt.figure(figsize=(12,4.2))
-    #
-    p1 = plt.subplot(1, 2, 1)
-    p1.set_xlabel('$V_{g}/U$', fontsize=20)
-    p1.set_ylabel('$V/U$', fontsize=20)
-    p1_im = plt.imshow(stab.T/gam, extent=[xmin, xmax, ymin, ymax],
+    fig = plt.figure(figsize=(6,4.2))
+    p = plt.subplot(1, 1, 1)
+    p.set_xlabel('$V_{g}/U$', fontsize=20)
+    p.set_ylabel('$V/U$', fontsize=20)
+    p.set_title(title, fontsize=20)
+    p_im = plt.imshow(stab_cond.T, extent=[xmin, xmax, ymin, ymax],
                                    aspect='auto',
                                    origin='lower',
                                    cmap=plt.get_cmap('Spectral'))
-    cbar1 = plt.colorbar(p1_im)
-    cbar1.set_label('Current [$\Gamma$]', fontsize=20)
-    #
-    p2 = plt.subplot(1, 2, 2)
-    p2.set_xlabel('$V_{g}/U$', fontsize=20);
-    p2.set_ylabel('$V/U$', fontsize=20);
-    p2_im = plt.imshow(stab_cond.T, extent=[xmin, xmax, ymin, ymax],
-                                    aspect='auto',
-                                    origin='lower',
-                                    cmap=plt.get_cmap('Spectral'))
-    cbar2 = plt.colorbar(p2_im)
-    cbar2.set_label('Conductance $\mathrm{d}I/\mathrm{d}V$', fontsize=20)
-    #
-    plt.tight_layout()
+    cbar = plt.colorbar(p_im)
+    cbar.set_label('Conductance $\mathrm{d}I/\mathrm{d}V$', fontsize=20)
     fig.savefig(fname, bbox_inches='tight', dpi=100, pad_inches=0.0)
     plt.show()
 
@@ -133,7 +121,7 @@ vpnt, vgpnt = 201, 201
 vlst = np.linspace(-2*U, 2*U, vpnt)
 vglst = np.linspace(-2.5*U, 1.5*U, vgpnt)
 stab, stab_cond = stab_calc(system, bfield, vlst, vglst)
-stab_plot(stab, stab_cond, vlst, vglst, U, gam, 'stab1.pdf')
+stab_plot(stab_cond, vlst, vglst, U, gam, 'Pauli, $B=0$', 'stab1.pdf')
 
 stab_b, stab_cond_b = stab_calc(system, 7.5, vlst, vglst)
-stab_plot(stab_b, stab_cond_b, vlst, vglst, U, gam, 'stab2.pdf')
+stab_plot(stab_cond_b, vlst, vglst, U, gam, 'Pauli, $B=0.375U$', 'stab2.pdf')
