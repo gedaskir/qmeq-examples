@@ -54,7 +54,7 @@ import qmeq
 
 # ### Hamiltonian
 #
-# Such a system can be modelled using so-called Anderson type Hamiltonian
+# Such a system can be modelled using the following Hamiltonian
 #
 # $H=H_{\mathrm{leads}}+H_{\mathrm{tunneling}}+H_{\mathrm{dot}}$
 #
@@ -65,7 +65,7 @@ import qmeq
 #
 # $H_{\mathrm{leads}}=\sum_{\alpha k}\varepsilon_{\alpha k}^{\phantom{\dagger}}c^{\dagger}_{\alpha k}c^{\phantom{\dagger}}_{\alpha k}$
 #
-# It is assumed that the leads have constant density of states $\nu_{F}$ (subscript $F$ corresponds to the Fermi level). Then the $k$-sums are performed as $\sum_{k}\ldots\rightarrow\nu_{F}\int_{-D}^{+D}\mathrm{d}E\ldots$, where $D$ denotes bandwidht of the leads. Additionally, we assume that the leads are thermalized according to a Fermi-Dirac occupation function $f_{\alpha}(E)=[e^{(E-\mu_{\alpha})/T_\alpha}+1]^{-1}$ with temperature $T_{\alpha}$ and chemical potential $\mu_{\alpha}$.
+# It is assumed that the leads have constant density of states $\nu_{F}$ (subscript $F$ corresponds to the Fermi level). Then the $k$-sums are performed as $\sum_{k}\ldots\rightarrow\nu_{F}\int_{-D}^{+D}\mathrm{d}E\ldots$, where $2D$ denotes bandwidht of the leads. Additionally, we assume that the leads are thermalized according to a Fermi-Dirac occupation function $f_{\alpha}(E)=[e^{(E-\mu_{\alpha})/T_\alpha}+1]^{-1}$ with temperature $T_{\alpha}$ and chemical potential $\mu_{\alpha}$.
 #
 # #### Quantum dot
 # For the quantum dot the following rather general many-body Hamiltonian is used
@@ -74,7 +74,7 @@ import qmeq
 #
 # $H_{\mathrm{single}}=\sum_{i}\varepsilon_{i}^{\phantom{\dagger}}d^{\dagger}_{i}d^{\phantom{\dagger}}_{i}+\sum_{i\neq j}t_{ij}^{\phantom{\dagger}}d^{\dagger}_{i}d^{\phantom{\dagger}}_{j}$
 #
-# $H_{\mathrm{Coulomb}}=\sum_{mnkl}U_{mnkl}d^{\dagger}_{m}d^{\dagger}_{n}d_{k}d_{l},$
+# $H_{\mathrm{Coulomb}}=\sum_{mnkl}U_{mnkl}d^{\dagger}_{m}d^{\dagger}_{n}d_{k}d_{l},\quad$ with $m<n,$
 #
 # where the interaction $U_{mnkl}$ can be present.
 #
@@ -94,7 +94,7 @@ import qmeq
 # +(\Omega d_{\uparrow}^{\dagger}d_{\downarrow}+\mathrm{H.c.})
 # +Ud_{\uparrow}^{\dagger}d_{\downarrow}^{\dagger}d_{\downarrow}^{\phantom{\dagger}}d_{\uparrow}^{\phantom{\dagger}}$
 #
-# with $\varepsilon_{\uparrow}=V_{g}+\frac{B}{2}$, $\varepsilon_{\downarrow}=V_{g}-\frac{B}{2}$, where $V_{g}$ is the gate voltage and $B$ is the magnetic field (representing anomalous Zeeman splitting of spinful orbital). We note that in our calculations we set $\lvert{e}\rvert=1$, $\hbar=1$, $k_{\mathrm{B}}=1$, and deal with the particle currents.  We choose such values for parameters:
+# with $\varepsilon_{\uparrow}=V_{g}+\frac{B}{2}$, $\varepsilon_{\downarrow}=V_{g}-\frac{B}{2}$, where $V_{g}$ is the gate voltage and $B$ is the magnetic field (representing anomalous Zeeman splitting of spinful orbital). $\Omega$ is the hybridisation between the states, which can appear due to presence of spin-orbit coupling (sets a concrete spin quantization axis) and a magnetic field perpendicular to the spin orientation. We note that in our calculations we set $\lvert{e}\rvert=1$, $\hbar=1$, $k_{\mathrm{B}}=1$, and deal with the particle currents.  We choose such values for parameters:
 
 # In[4]:
 
@@ -141,7 +141,7 @@ hsingle = {(0, 0): vgate+bfield/2,
            (0, 1): omega}
 
 
-# **Comment 1.** We note that in a dictionary it is enough to specify one element like $\Omega d_{\uparrow}^{\dagger}d_{\downarrow}^{\phantom{\dagger}}$, because the other one $\Omega^{*} d_{\downarrow}^{\dagger}d_{\uparrow}^{\phantom{\dagger}}$ is determined by complex conjugation and is included automatically. Also if an element like (1,0) is given then it will be added to the Hamiltonian. So specifying {(0, 1):omega, (1,0):omega.conjugate()} will simply double count $\Omega$.
+# **Comment 1.** In a dictionary it is enough to specify one element like $\Omega d_{\uparrow}^{\dagger}d_{\downarrow}^{\phantom{\dagger}}$, because the element $\Omega^{*} d_{\downarrow}^{\dagger}d_{\uparrow}^{\phantom{\dagger}}$ is determined by complex conjugation and is included automatically in order to get a Hermitian quantum dot Hamiltonian. If an element like (1,0) is given, it will be added to the Hamiltonian. So specifying {(0, 1):omega, (1,0):omega.conjugate()} will simply double count $\Omega$.
 
 # The Coulomb interaction Hamiltonian $H_{\mathrm{Coulomb}}$ is specified using a dictionary:
 
