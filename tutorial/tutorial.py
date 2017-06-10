@@ -19,7 +19,7 @@ import numpy as np
 #
 # QmeQ is a python package for calculating transport through quantum dots attached to leads using rate equations.
 #
-# Currently the following methods are implemented for stationary state calculations:
+# Currently the following approaches are implemented for stationary state calculations:
 # **Pauli master equation**
 # **Redfield approach**
 # **First order von Neumann approach (1vN)**
@@ -74,7 +74,7 @@ import qmeq
 #
 # $H_{\mathrm{single}}=\sum_{i}\varepsilon_{i}^{\phantom{\dagger}}d^{\dagger}_{i}d^{\phantom{\dagger}}_{i}+\sum_{i\neq j}t_{ij}^{\phantom{\dagger}}d^{\dagger}_{i}d^{\phantom{\dagger}}_{j}$
 #
-# $H_{\mathrm{Coulomb}}=\sum_{mnkl}U_{mnkl}d^{\dagger}_{m}d^{\dagger}_{n}d_{k}d_{l},\quad$ with $m<n,$
+# $H_{\mathrm{Coulomb}}=\sum_{mnkl}U_{mnkl}d^{\dagger}_{m}d^{\dagger}_{n}d_{k}d_{l}$
 #
 # where the interaction $U_{mnkl}$ can be present.
 #
@@ -174,7 +174,7 @@ mulst = {0: vbias/2, 1: -vbias/2, 2: vbias/2, 3: -vbias/2}
 tlst =  {0: temp,    1: temp,     2: temp,    3: temp}
 
 
-# #### Pauli, Redfield, and 1vN methods
+# #### Pauli, Redfield, and 1vN approaches
 #
 # At last we can construct our system using **qmeq.Builder** as:
 
@@ -203,7 +203,7 @@ print('Current continuity:')
 print(np.sum(system.current))
 
 
-# If we want to change the method we could redefine the system with the **qmeq.Builder** by specifying the new *kerntype*. It is also possible just to change the value of *system.kerntype*:
+# If we want to change the approach we could redefine the system with the **qmeq.Builder** by specifying the new *kerntype*. It is also possible just to change the value of *system.kerntype*:
 
 # In[13]:
 
@@ -215,11 +215,11 @@ for kerntype in kernels:
     print(system.current)
 
 
-# We see that for our considered system Pauli, Redfield, and 1vN methods yield the same results. This is so, because for given parameter values the spin is a good quantum number and no coherences between $\lvert\uparrow\rangle$ and $\lvert\downarrow\rangle$ are developed.
+# We see that for our considered system Pauli, Redfield, and 1vN approaches yield the same results. This is so, because for given parameter values the spin is a good quantum number and no coherences between $\lvert\uparrow\rangle$ and $\lvert\downarrow\rangle$ are developed.
 #
-# #### 2vN method
+# #### 2vN approach
 #
-# In order to use 2vN method we need to rebuild the system, because the solution method is rather different. It is described by **Transport2vN** object and not **Transport** object. We also need to specify a number of points *kpnt* in an equidistant energy grid on which the 2vN calculations are performed (iterative solution of an integral equation):
+# In order to use 2vN approach we will rebuild the system, because the solution method is rather different. It is described by **Approach2vN** object and not **Approach** object. We also need to specify a number of points *kpnt* in an equidistant energy grid on which the 2vN calculations are performed (iterative solution of an integral equation):
 
 # In[14]:
 
