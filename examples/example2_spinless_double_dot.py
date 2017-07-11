@@ -38,7 +38,7 @@ system = qmeq.Builder(nsingle, hsingle, coulomb,
 #---------------------------------------------------
 
 def omega_vg(system, olst, vglst):
-    opnt, vgpnt = olst.shape[0], olst.shape[0]
+    opnt, vgpnt = olst.shape[0], vglst.shape[0]
     mtr = np.zeros((opnt, vgpnt), dtype=float)
     for j1 in range(opnt):
         system.change(hsingle={(0,1):olst[j1]})
